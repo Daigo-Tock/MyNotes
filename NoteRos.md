@@ -77,9 +77,23 @@
 > In [1]: odrv0.vbus_voltage  
 > Out[1]: 11.97055721282959  
 
+* M0を構成する
+  * 要注意！破壊の可能性あり！
 
-
-
+  * 制限の設定
+    * 電流制御
+      * $ odrv0.axis0.motor.config.current_lim      [A]
+      * デフォルトで電流は10Aに設定されている（弱いね！） 
+      * ODriveを調整したら，60Aまで増やして，パフォーマンスを向上させられるよ
+      * 60Aを超えると，電流アンプのゲインを変更する必要があることに注意
+    * 速度制限
+      * $ odrv0.axis0.controller.config.vel_limit      [turn/s]
+      * 速度もだいぶ控えめ
+  * 他のハードウェアパラメータの設定
+    * ブレーキ抵抗を仕様する場合
+      * odrv0.config.enable_brake_resistor を $ True に設定．
+      * そのあと，ODriveのconfigurationを保存し，ODriveをrebootする
+      * 
 
 
 
