@@ -39,12 +39,27 @@
 
 * ツールのダウンロードとインストール
   * ガイドのほどんどの手順が，odrivetoolと呼ばれるユーティリティを参照しているため，最初にそれをインストールする
-    * デスクトップ上で，Ubuntuエミュレータを使用して行った．
+    * デスクトップ上で，Ubuntuエミュレータを使用して行った．=> WSL2は，USBデバイスを認識しないため以下の操作は無為．別のPCか，素直にWindowsマシーンとして使うべき．
     * 最初からpython3はインストールされている
     * python3-pipをインストール
       * sudo apt install python3-pip
     * odrivetoolをインストール
       * $ sudo pip3 install --upgrade odrive
+    * ここで何故かUSBを認識しないことが発覚 => WSL2の仕様で有ることが判明．
+    * 再度laptopで同じことを行う．
+    * $ sudo pip3 install --upgrade odrive
+     * Errorが再び．
+> You are ysubg ouo version 8.1.1, however version 21.2.4 is available.
+> You should consider upgrading via the'pip install --upgrade pip'
+
+    * 指示通りにコマンドを流すも，同じことを返される．「〇〇が必要だ」「わかった〇〇が必要なんだな.じゃあ✕✕を用意しろ」「✕✕が必要だ」「わかった✕✕が必要なんだな．じゃあ〇〇を用意しろ」
+    * 解決済み => $ sudo python3 -m pip install --upgrade pip
+    
+    * 結局このやり方はだめだった．
+    * https://github.com/odriverobotics/ODrive にアクセス．ダウンロード．
+    * $ odrivetool
+    * なんでこれでできるんやぁ......?
+    
 
 * odrivetoolを始める
   * $ odivetool 
