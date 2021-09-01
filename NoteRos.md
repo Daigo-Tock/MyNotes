@@ -8,25 +8,8 @@
 
 ## 今日の内容
 
-* 動機付け（なんでこの講義があるのか）
-
----
-
-## 今日の内容
-
 * ODriveの基本的な使い方
 * RosとODrive
-
-## ロボットシステム
-
-* とはなんだろう？
-* この講義で言うところのロボットシステム
-   * 目的を遂行するために動く
-   * 高度に自動化されている
-       * 例1: サッカーロボット、つくばチャレンジのロボット、ルンバ
-       * <span style="color:red">例2: 新幹線、ゆりかもめ、自動ドア、エレベータ</span><br />　
-* 少し拡大解釈すると、ロボット（的なもの）<br />は十分世の中に普及している
-   * 趣味のものではないので、どう効率よく開発するかを大真面目に考えないといけない
 
 ---
 
@@ -108,42 +91,25 @@
         * これは，一回転あたりのパルス(PPR)値の4倍らしい．
   * 構成を保存するには
     * $ odrv0.save_configuration() と入力する
-
-
-
----
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7xXnXHc0roA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-
-$\Longrightarrow$組み合わせることを実現する<br />コンピュータや社会の仕組みを学習
-
----
-
-## 手っ取り早さの実現
-
-
-* <span style="color:red">プラットフォーム</span>の存在
-
-## <span style="text-transform:none">Raspberry Pi</span>
-<img width="35%" src="md/images/raspi4.jpeg" />
-
----
-
-## <span style="text-transform:none">Raspberry Pi</span>について詳しく
-
-* イギリスで開発された教育用のシングルボードコンピュータ<br />$ $
-* 開発の動機・歴史
-
----
----
-
-## 講義で使う道具
----
-
-## ウェブサイト等
-
-* [講義のサイト](https://lab.ueda.tech/?page=robosys_2020)<br />$ $
-* 連絡: 他人に見られてもいい内容はTwitterで[@ryuichiueda](https://twitter.com/ryuichiueda)あるいは[@uedalaboratory](https://twitter.com/uedalaboratory)
-    * 質問も重要なコントリビューション<br />$ $
-* [この講義資料](https://github.com/ryuichiueda/robosys2020)にプルリクくれて私がマージしたら加点
+* M0の位置制御を行う
+  * $ odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
+    * M1なら，substitute $ axs1 wherever it says axis0
+    * このコマンドは，最初にモーターの電気的特性を測定し，次にモーターの電気的位相とエンコーダー位置の間のオフセットを測定する
+  * $ odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
+    * このコマンドは，モーターがその位置を保持するけど，めっちゃ弱々しい． 
+  * $ odrv0.axis0.motor.config.current_lim
+    * このコマンドも，モーターがその位置を保持して，めっちゃ津用意．
+  * odrv0.axis0.controller.input_pos = 1
+    * このコマンドは新しい位置設定値を送信する．
+* ほかの制御モード
+  * デフォルトの制御モードは 完全なエンコーダー基準のフレームで，フィルタリングされていない位置制御です．
+  * 代わりに，軌道制御をおすすめする（controlled trajectory）
+  * もし連続回転を大きな数を使わずに行いたいのなら，サークルフレーム内での制御を用いることで可能です．
+    * Filtered position control
+    * Trajectory control
+      * https://docs.odriverobotics.com/control-modes.html#trajectory-control
+    * Circular position control
+    * Velocity control
+    * Ramped velocity control
+    * Torque control
 
