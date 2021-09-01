@@ -103,8 +103,11 @@
       * アンペア単位でトルクを指令する場合は、トルク定数を1に設定すればいいらしい．
       * $ odrv0.axis0.motor.config.motor_type は，使用されているモーターのタイプ
       * 現在，High-current motors (MOTOR_TYPE_HIGH_CURRENT)とgimbal motors (MOTOR_TYPE_GIMBAL)がサポートされている
-        * If you’re using a regular hobby brushless motor like this one, you should set motor_mode to MOTOR_TYPE_HIGH_CURRENT. For low-current gimbal motors like this one, you should choose MOTOR_TYPE_GIMBAL. Do not use MOTOR_TYPE_GIMBAL on a motor that is not a gimbal motor, as it may overheat the motor or the ODrive.  
-Further detail: If 100’s of mA of current noise is “small” for you, you can choose MOTOR_TYPE_HIGH_CURRENT. If 100’s of mA of current noise is “large” for you, and you do not intend to spin the motor very fast (Ω * L « R), and the motor is fairly large resistance (1 ohm or larger), you can chose MOTOR_TYPE_GIMBAL. If 100’s of mA current noise is “large” for you, and you intend to spin the motor fast, then you need to replace the shunt resistors on the ODrive.  
+        * If you’re using a regular hobby brushless motor like this one, you should set motor_mode to MOTOR_TYPE_HIGH_CURRENT. For low-current gimbal motors like this one, you should choose MOTOR_TYPE_GIMBAL. Do not use MOTOR_TYPE_GIMBAL on a motor that is not a gimbal motor, as it may overheat the motor or the ODrive.    Further detail: If 100’s of mA of current noise is “small” for you, you can choose MOTOR_TYPE_HIGH_CURRENT. If 100’s of mA of current noise is “large” for you, and you do not intend to spin the motor very fast (Ω * L « R), and the motor is fairly large resistance (1 ohm or larger), you can chose MOTOR_TYPE_GIMBAL. If 100’s of mA current noise is “large” for you, and you intend to spin the motor fast, then you need to replace the shunt resistors on the ODrive.  
+        * odrv0.axis0.encoder.config.cpr はエンコーダ1回転あたりのカウント数です．
+        * これは，一回転あたりのパルス(PPR)値の4倍らしい．
+  * 構成を保存するには
+    * $ odrv0.save_configuration() と入力する
 
 
 
