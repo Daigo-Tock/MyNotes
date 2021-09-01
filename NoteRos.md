@@ -69,13 +69,13 @@
   * $ odivetool 
   * 詳しく知りたいヒトは，https://docs.odriverobotics.com/odrivetool.html を参照すること
     * ここで仮に $ odrv0.vbus_voltage と入力すると， ボードの主電源電圧を調べることができます。次のように表示される
-> ODrive control utility v0.5.1
-> Please connect your ODrive.
-> Type help() for help.
->
-> Connected to ODrive 306A396A3235 as odrv0
-> In [1]: odrv0.vbus_voltage
-> Out[1]: 11.97055721282959
+> ODrive control utility v0.5.1  
+> Please connect your ODrive.  
+> Type help() for help.  
+>  
+> Connected to ODrive 306A396A3235 as odrv0  
+> In [1]: odrv0.vbus_voltage  
+> Out[1]: 11.97055721282959  
 
 
 
