@@ -91,10 +91,21 @@
       * 速度もだいぶ控えめ
   * 他のハードウェアパラメータの設定
     * ブレーキ抵抗を仕様する場合
-      * odrv0.config.enable_brake_resistor を $ True に設定．
+      * $ odrv0.config.enable_brake_resistor を $ True に設定．
       * そのあと，ODriveのconfigurationを保存し，ODriveをrebootする
-      * 
+      * $ odrv0.config.brake_resistance [Ohm] は，ブレーキ抵抗の抵抗値．
+      * なにか，ブレーキ中に問題が発生した場合は，0.05 Ohm くらい増やすと良いらしい
+      * odrv0.config.dc_max_negative_current [A] は電源に逆流できる電流の量．
+      * 慣例的に，負．デフォルトでは10mAと，控えめ．
+      * $ odrv0.axis0.motor.config.pole_pairs は，ローターの磁極数を2で割った値になる．
+      * $ odrv0.axis0.motor.config.torque_constant は，モーターに供給される電流の1Aあたりに，モータに生成されるトルクのratio．
+      * これは．8.27 / (motor kV) に設定する必要がある．
+      * アンペア単位でトルクを指令する場合は、トルク定数を1に設定すればいいらしい．
+      * $ odrv0.axis0.motor.config.motor_type は，使用されているモーターのタイプ
+      * 現在，High-current motors (MOTOR_TYPE_HIGH_CURRENT)とgimbal motors (MOTOR_TYPE_GIMBAL)がサポートされている
+        * If you’re using a regular hobby brushless motor like this one, you should set motor_mode to MOTOR_TYPE_HIGH_CURRENT. For low-current gimbal motors like this one, you should choose MOTOR_TYPE_GIMBAL. Do not use MOTOR_TYPE_GIMBAL on a motor that is not a gimbal motor, as it may overheat the motor or the ODrive.
 
+Further detail: If 100’s of mA of current noise is “small” for you, you can choose MOTOR_TYPE_HIGH_CURRENT. If 100’s of mA of current noise is “large” for you, and you do not intend to spin the motor very fast (Ω * L « R), and the motor is fairly large resistance (1 ohm or larger), you can chose MOTOR_TYPE_GIMBAL. If 100’s of mA current noise is “large” for you, and you intend to spin the motor fast, then you need to replace the shunt resistors on the ODrive.  
 
 
 
