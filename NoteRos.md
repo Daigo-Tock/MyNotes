@@ -90,6 +90,8 @@ started core service [/rosout]
 ```
 
 ## workspaceを作る
+
+* ワークスペスを作って設定まで
 ```bash
 $ mkdir -p catkin_ws/src // オプション -p は、多階層のディレクトリを一回で作る
 $ cd !$ // 直前に作ったディレクトリパスが!$に格納されている
@@ -97,4 +99,64 @@ $ catkin_init_workspace
 > Creating symlink "/home/user/catkin_ws/src/CMakeLists.txt" pointing to "/opt/ros/noetic/share/catkin/cmake/toplevel.cmake"
 $ ls
 > CMakeLists.txt
+$ vim ~/.bashrc // 加筆
+>>>
+  fi
+fi
+source /opt/ros/noetic/setup.bash
+source ~/catkin_ws/devel/setup.bash // ここを追加
+export ROS_MASTER_URI=http://localhost:11311
+export ROS_HOSTNAME=localhost
+``` 
+
+```bash
+$ cd ~/catkin_ws
+$ pwd
+> /home/user/catkin_ws // catkin_ws直下で作業すること
+$ catkin_make // PCにはなにもインストールして内容で、標準でついてくるものがいろいろあるから、それのビルドが始まる。
+$ source ~/.bashrc
+$ echo $ROS_PACKAGE_PATH // できているかどうかの確認
+> /home/user/catkin_ws/src:/opt/ros/noetic/share // これが表示されればOK
 ```
+
+## ROSパッケージ
+* インストールは2種類
+	* aptを使う
+	* ~/.catkin_ws/src にファイルをおいてビルドして使う 
+		* 自分でパッケージを作るときはこの方法
+### 例えば、カメラ画像をwebに表示したいなら
+
+* パッケージの準備 apt編
+```bash 
+$ sudo apt install ros-noetic-cv-camera // openCVのカメラ画像を読み込むパッケージ
+$ sudo apt install ros-noetic-cv-bridge // openCVの世界とrosの世界のデータを交換するパッケージ。多分インストールはもうされているはず
+```
+** ros関係のパッケ０時をaptで扱う設定 
+** => step1.bashが/etc/apt/sources.list.d/ros-latest.listに書き込み済み
+
+* パッケージの準備 ソフトウェア編
+```bash
+$ cd ~/.catkin_ws/src
+$ git clone https://github.com/GT-RAIL/async_web_server_cpp.git // 
+$ git clone https://github.com/RobotWebTools/web_video_server.git // 
+$ cd ~/.catkin_ws
+$ catkin_make // このコマンドは、必ず~/.catkin_makeディレクトリで行うこと
+	もしいちいちディレクトリを移動するのが面倒なら、bashで行ける
+	$ ( cd ~/catkin?ws/ && catkin_make -j 4)
+	* -j 4 はCPUを4つ使うというパラメータ(ラズパイにそんなパワーはないので避けること)
+```
+* ロスサーバーを立ち上げ、ブラウザでラズパイのIPアドレスにアクセスする [ 以下、実際には実行していない]
+```bash
+$ pwd
+> /home/user/catkin_ws/src
+$ roscore & // バックグラウンドでロスサーバーを立てることができる
+$ ls /dev/video*
+> /dev/video0
+$ rosrun cv_camera cv_camera_node // 画面は黒いままになるはず
+
+$ source ~/.bashrc
+$ ssh pi@192.168.0.0
+$ source ~/.bashrc
+$ rosrun web_video_server web_video_server
+> [ INFO] [1605770949.484487424]: Waiting For connections on 0.0.0.0:8080 // これは、ポート番号8080でカメラ画像が配信しているという意味
+
