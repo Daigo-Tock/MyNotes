@@ -159,4 +159,101 @@ $ ssh pi@192.168.0.0
 $ source ~/.bashrc
 $ rosrun web_video_server web_video_server
 > [ INFO] [1605770949.484487424]: Waiting For connections on 0.0.0.0:8080 // これは、ポート番号8080でカメラ画像が配信しているという意味
+```
+## ROSノード
+
+* ROS上で動くプログラムのことを「ノード」と呼ぶ
+	* Unixでいうところの「プロセス」
+	* さっきのやつにおける、cv_camera_node, web_video_server
+* ノードは連携して動く
+	* cv_camera_node: カメラ画像をROS、OpenCV用の形式に変換
+	* web_video_server: 変換されたデータをもらってウェブ配信
+```bash
+$ rosnode list //　実行中のノードリスト
+> /cv_camera
+> /rosout
+> /web_video_server
+```
+## ROSトピックとメッセージ
+
+```bash
+$ rostopic list
+> /cv_camera/camera_info
+> /cv_camera/image_raw
+> /rosout
+> /rosout_agg
+```
+* データをやり取りする口（トピック）が表示される
+* やり取りされるデータのことをメッセージという
+
+## ノードとトピックの関係　
+* 各ノードがトピックを通じてメッセージを融通することで全体として仕事を行う
+	* ノードは、いくつかの「パブリッシャ」と「サブスクライバ」を持つ
+		*　データを出す側がパブリッシャ
+		*　データを受ける側がサブスクライバ
+	*　この構造があるおかげで、ノードの柔軟な組み換えが可能になる
+		*　インターフェイスが同じならプログラムを取り替えられる
+		*　例: mjpeg_server（古い） => web_video_server（新しい）
+	*　いくつかのノードがゆるく連携して動くので、立ち上げる順番だったりもない
+
+## ROSパッケージの構成
+* package.xml: パッケージマニフェスト => 他パッケージの依存関係、連絡先、ライセンス等々が書かれてある
+* CMakeLists/txt: CMakeのスクリプト
+* コード
+	*　src: ソースコード（.cppファイル）
+	*　include: ヘッダファイル（.hファイル） 	
+
+## パッケージを作ってみる
+
+```bash
+$ cd ~/catkin_ws/src
+$ catkin_create_pkg mypkg rospy
+$ ls 
+> CMakeLists.txt  async_web_server_cpp  mypkg  web_video_server
+$ cd mypkg/
+$ ls
+> MakeLists.txt  package.xml  src
+$ vim package.xml // LICENSEとmaintainerくらいを編集すればよい
+```
+* gitの使い方応用
+```bash
+$ sudo apt install hub 
+$ git init
+$ git add -A
+$ git commit -m "Initial commit"
+$ hub create // ユーザー名とパスを入れれば、もう出来上がり
+```
+
+* 
+```bash
+$ mkdir scripts // pythonやったらscriptsやんね
+$ cd scripts
+$ pwd
+> /home/user/catkin_ws/src/mypkg/scripts
+$ vim count.py
+```
+* count.pyの中身
+```bash
+#!/usr/bin/env python3
+imort rospy
+from std_msgs.msg import Int32
+
+rospy.init_node('count')
+pub = rospy.Publisher('count_up', Int32, queue_size=1)
+rate = rospy.Rate(10)
+n = 0
+while not rospy.is_shutdown():
+    n += 1
+    pub.publish(n)
+    rate.sleep()
+```
+
+* 権限を付与
+``` bash
+$ ls -l count.py
+> -rw-rw-r-- 1 mirano-pat mirano-pat 253  9月  3 02:51 count.py
+$ chmod +x count.py
+$ ls -l count.py
+> -rwxrwxr-x 1 mirano-pat mirano-pat 253  9月  3 02:51 count.py
+```
 
