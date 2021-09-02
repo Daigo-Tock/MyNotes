@@ -39,3 +39,62 @@
 	*　ビルドシステム
 	*　パッケージ管理
 	*　テストツール
+
+## ROSをインストール
+
+* https://github.com/mirano-Pat/ros_setup_scripts_Ubuntu20.04_server
+* このサイトにある ```bash step0.bash```と```bash step1.bash```をcopy and pasteで完了
+* インストールが完了したかどうか確認するには
+	```bash
+	$ cat ~/.bashrc
+	> ...
+	>     . /etc/bash_completion
+	>  fi
+	> fi
+	> source /opt/ros/noetic/setup.bash
+	> export ROS_MASTER_URI=http://localhost:11311
+	> export ROS_HOSTNAME=localhost
+	> ```
+
+* 最後の３行を確認できれば多分大丈夫
+
+## ROSを動かす
+```bash
+$ roscore
+> 
+.. logging to /home/mirano-pat/.ros/log/76ed3670-0bce-11ec-8b6f-0b3c12ebd59f/roslaunch-miranopat-Z97X-UD3H-34725.log  
+Checking log directory for disk usage. This may take a while.  
+Press Ctrl-C to interrupt  
+Done checking log file disk usage. Usage is <1GB.  
+  
+started roslaunch server http://localhost:46063/  
+ros_comm version 1.15.11  
+  
+  
+SUMMARY  
+========  
+  
+PARAMETERS  
+ * /rosdistro: noetic  
+ * /rosversion: 1.15.11  
+  
+NODES  
+  
+auto-starting new master  
+process[master]: started with pid [34736]  
+ROS_MASTER_URI=http://localhost:11311/  
+  
+setting /run_id to 76ed3670-0bce-11ec-8b6f-0b3c12ebd59f  
+process[rosout-1]: started with pid [34749]  
+started core service [/rosout]  
+```
+
+## workspaceを作る
+```bash
+$ mkdir -p catkin_ws/src // オプション -p は、多階層のディレクトリを一回で作る
+$ cd !$ // 直前に作ったディレクトリパスが!$に格納されている
+$ catkin_init_workspace
+> Creating symlink "/home/user/catkin_ws/src/CMakeLists.txt" pointing to "/opt/ros/noetic/share/catkin/cmake/toplevel.cmake"
+$ ls
+> CMakeLists.txt
+```
