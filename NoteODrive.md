@@ -34,6 +34,7 @@ $ cat /etc/issue
 
 * USBからUbuntu 20.04 LTSをインストール
 * アップグレード
+
 ```bash
 $ sudo apt update
 $ sudo apt upgrade
@@ -53,8 +54,9 @@ $ python3 -V
 
 ## ODrive DOCSを参照
 
-* cd ~/. //　なんとなく, /home/user に移動
 ```bash
+$ cd ~/. //　なんとなく, /home/user に移動
+
 $ sudo pip3 install --upgrade odrive
 > Successfully built odrive  
 > Installing collected packages: IntelHex, PyUSB, backcall, traitlets, matplotlib-inline, pygments, parso, jedi, > decorator, pickleshare, wcwidth, prompt-toolkit, ipython, numpy, cycler, pyparsing, kiwisolver, matplotlib, odrive  
