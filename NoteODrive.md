@@ -95,10 +95,10 @@ odrv0.axis0.motor.config.motor_type = MOTOR_TYPE_HIGH_CURRENT
 odrv0.axis0.motor.config.resistance_calib_max_voltage = 4  
 odrv0.axis0.motor.config.requested_current_range = 25 #Requires config save and reboot  
 odrv0.axis0.motor.config.current_control_bandwidth = 100  
-odrv0.axis0.motor.config.torque_constant = 8.27 / 24 // 24 == <measured KV>  
+odrv0.axis0.motor.config.torque_constant = 8.27 / 24 #24 == <measured KV>  
 
 odrv0.axis0.encoder.config.mode = ENCODER_MODE_HALL  
-odrv0.axis0.encoder.config.cpr = 12 // the num of pole pairs * the num of states of the hall feedback  
+odrv0.axis0.encoder.config.cpr = 12 #the num of pole pairs * the num of states of the hall feedback  
 odrv0.axis0.encoder.config.calib_scan_distance = 150  
 odrv0.config.gpio9_mode = GPIO_MODE_DIGITAL  
 odrv0.config.gpio10_mode = GPIO_MODE_DIGITAL  
