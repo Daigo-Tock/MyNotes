@@ -81,11 +81,9 @@ $ vim ~/.bashrc
 ```bash
 odrv0.axis0.motor.config.current_lim = 10  
 odrv0.axis0.controller.config.vel_limit  // [turn/s]
-odrv0.axis0.motor.config.calibration_current // [A]
-odrv0.config.enable_brake_resistor = False  
+odrv0.axis0.motor.config.calibration_current // [A]  
 odrv0.config.brake_resistance // [Ohm] 
 odrv0.config.dc_max_negative_current // [Amps]
-odrv0.axis0.motor.config.pole_pairs = 4 // This is the number of magnet pokes in the rotor, divided by two.  
 odrv0.axis0.motor.config.torque_constant // This should be et to 8.27/(motor KV)  
 odrv0.axis0.motor.config.motor_type = MOTOR_TYPE_HIGH_CURRENT  
 ```
@@ -95,16 +93,20 @@ odrv0.axis0.motor.config.motor_type = MOTOR_TYPE_HIGH_CURRENT
 odrv0.axis0.motor.config.resistance_calib_max_voltage = 4  
 odrv0.axis0.motor.config.requested_current_range = 25 #Requires config save and reboot  
 odrv0.axis0.motor.config.current_control_bandwidth = 100  
-odrv0.axis0.motor.config.torque_constant = 8.27 / 24 #24 == <measured KV>  
+odrv0.axis0.motor.config.torque_constant = 8.27 / 0.024 #24 == <measured KV>  
+
+
+odrv0.config.enable_brake_resistor = True
 
 odrv0.axis0.encoder.config.mode = ENCODER_MODE_HALL  
-odrv0.axis0.encoder.config.cpr = 12 #the num of pole pairs * the num of states of the hall feedback  
+odrv0.axis0.motor.config.pole_pairs = 4 # This is the number of magnet pokes in the rotor, divided by two.  
+odrv0.axis0.encoder.config.cpr = 24 #the num of pole pairs * the num of states of the hall feedback  
 odrv0.axis0.encoder.config.calib_scan_distance = 150  
 odrv0.config.gpio9_mode = GPIO_MODE_DIGITAL  
 odrv0.config.gpio10_mode = GPIO_MODE_DIGITAL  
 odrv0.config.gpio11_mode = GPIO_MODE_DIGITAL  
 
-odrv0.axis0.encoder.config.bandwidth = 100  
+odrv0.axis0.encoder.config.bandwidth =35 
 odrv0.axis0.controller.config.pos_gain = 1  
 odrv0.axis0.controller.config.vel_gain = 0.02 * odrv0.axis0.motor.config.torque_constant * odrv0.axis0.encoder.config.cpr    
 odrv0.axis0.controller.config.vel_integrator_gain = 0.1 * odrv0.axis0.motor.config.torque_constant * odrv0.axis0.encoder.config.cpr  
@@ -114,9 +116,26 @@ odrv0.axis0.controller.config.control_mode = CONTROL_MODE_VELOCITY_CONTROL
 odrv0.save_configuration()    
 odrv0.reboot()  
 
+odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE 
+dump_errors(odrv0)
+
+
 odrv0.axis0.requested_state = AXIS_STATE_MOTOR_CALIBRATION  
-
 odrv0.axis0.motor  
-
 odrv0.axis0.motor.config.pre_calibrated = True
+
+odrv0.axis0.requested_state = AXIS_STATE_ENCODER_HALL_POLARITY_CALIBRATION
+odrv0.axis0.encoder
+odrv0.axis0.requested_state = AXIS_STATE_ENCODER_OFFSET_CALIBRATION
+odrv0.axis0.encoder
+odrv0.axis0.encoder.config.pre_calibrated = True
+
+odrv0.save_configuration()
+odrv0.reboot()
+
+odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
+odrv0.axis0.controller.input_vel = 2
+# Your motor should spin here
+odrv0.axis0.controller.input_vel = 0
+odrv0.axis0.requested_state = AXIS_STATE_IDLE
 ```
