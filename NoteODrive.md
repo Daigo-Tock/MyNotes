@@ -36,6 +36,8 @@ $ cat /etc/issue
 * アップグレード
 
 ```bash
+
+$ gnome-terminal --tab
 $ sudo apt update
 $ sudo apt upgrade
 $ LANG=C xdg-user-dirs-gtk-update // ホームディレクトリの中身を英語にする
