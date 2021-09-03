@@ -122,7 +122,7 @@ $ echo $ROS_PACKAGE_PATH // できているかどうかの確認
 ## ROSパッケージ
 * インストールは2種類
 	* aptを使う
-	* ~/.catkin_ws/src にファイルをおいてビルドして使う 
+	* ~/catkin_ws/src にファイルをおいてビルドして使う 
 		* 自分でパッケージを作るときはこの方法
 ### 例えば、カメラ画像をwebに表示したいなら
 
@@ -136,11 +136,11 @@ $ sudo apt install ros-noetic-cv-bridge // openCVの世界とrosの世界のデ�
 
 * パッケージの準備 ソフトウェア編
 ```bash
-$ cd ~/.catkin_ws/src
+$ cd ~/catkin_ws/src
 $ git clone https://github.com/GT-RAIL/async_web_server_cpp.git // 
 $ git clone https://github.com/RobotWebTools/web_video_server.git // 
-$ cd ~/.catkin_ws
-$ catkin_make // このコマンドは、必ず~/.catkin_makeディレクトリで行うこと
+$ cd ~/catkin_ws
+$ catkin_make // このコマンドは、必ず~/catkin_makeディレクトリで行うこと
 	もしいちいちディレクトリを移動するのが面倒なら、bashで行ける
 	$ ( cd ~/catkin?ws/ && catkin_make -j 4)
 	* -j 4 はCPUを4つ使うというパラメータ(ラズパイにそんなパワーはないので避けること)
