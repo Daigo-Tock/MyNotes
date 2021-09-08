@@ -67,6 +67,29 @@ rosrun rosserial_arduino make_libraries.py
 
 * 初心者やのに金欠でArduinoが買えずESP32をポチった人向け
 
+* ```bash $ python```と入力するだけでpython3が動くようにする
+```bash
+vim ~/.bashrc # .bashrcを編集。最終行に移動する
+```
+```text
+which python
+> # 反応なし
+cd /usr/bin
+ls | grep python3
+> python3
+> python3-config
+> python3-futurize
+> python3-pasteurize
+> python3.8
+> python3.8-config
+> x86_64-linux-gnu-python3-config
+> x86_64-linux-gnu-python3.8-config
+sudo ln -s /usr/bin/python3.8 /usr/bin/python
+which python
+> /usr/bin/python
+```
+を追加
+
 * 全部[Github](https://github.com/espressif/arduino-esp32)に書いてある。必要最低限だけしか書かないので、Errorを起こしたら自力で解決して。
 
 * {file} => {setting} => {adding bord manager url}に、``` https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_dev_index.json ```を追加
