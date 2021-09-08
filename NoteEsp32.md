@@ -158,4 +158,10 @@ void loop() {
   Serial.println(value);
   delay(1000); 
 }
+```
 ---
+
+## esp32を使うとき走らせるスクリプト
+* 無線なら```bash rosrun rosserial_python serial_node.py tcp```
+* 優先なら```bash rosrun rosserial_python serial_node.py _port:=/dev/ttyUSB0```
+
