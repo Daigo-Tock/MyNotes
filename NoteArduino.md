@@ -1,10 +1,9 @@
 # NoteArduino
+---
 
-## AUTHOR
+ birdman
 
-* 宮前　俊治
-* 九州大学鳥人間チーム
-
+---
 ## 今日やること
 
 * Ubuntu20.04LTS、ROS noetic 環境で、Arduinoを用いて、Lチカができるようになる
