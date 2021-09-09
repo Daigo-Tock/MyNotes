@@ -88,9 +88,14 @@ odrv0.erase_configuration()
 
 ```
 
-odrv0.config.enable_brake_resistor = True
+odrv0.config.enable_brake_resistor = True # True False
+odrv0.axis0.encoder.config.cpr = 4096/ 2
+odrv0.axis0.encoder.config.mode = ENCODER_MODE_INCREMENTAL
 odrv0.axis0.motor.config.pole_pairs = 4
 odrv0.axis0.motor.config.motor_type = MOTOR_TYPE_HIGH_CURRENT
+
+
+odrv0.save_configuration()
 
 
 odrv0.axis0.requested_state = AXIS_STATE_ENCODER_OFFSET_CALIBRATION
@@ -113,10 +118,11 @@ odrv0.clear_errors()
 ---
 
 ```odrivetool
+
 odrv0.axis0.motor.config.pole_pairs = 4
 odrv0.axis0.motor.config.motor_type = MOTOR_TYPE_HIGH_CURRENT
 
-odrv0.axis0.encoder.config.cpr = 4096 * 4
+odrv0.axis0.encoder.config.cpr = 4096/ 2
 ```
   * save
 ```odrivetool
