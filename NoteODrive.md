@@ -89,23 +89,26 @@ odrv0.erase_configuration()
 ```
 
 odrv0.config.enable_brake_resistor = True # True False
-odrv0.axis0.encoder.config.cpr = 2048 * 4
+odrv0.axis0.encoder.config.cpr = 8 # defo 8 ppr, max 2048 ppr
 odrv0.axis0.encoder.config.mode = ENCODER_MODE_INCREMENTAL
 odrv0.axis0.motor.config.pole_pairs = 4
 odrv0.axis0.motor.config.motor_type = MOTOR_TYPE_HIGH_CURRENT
 odrv0.axis0.motor.config.torque_constant = 8.27 / 4 #4000 == <measured KV>  
 
-odrv0.axis0.motor.config.requested_current_range = 60
+odrv0.axis0.motor.config.resistance_calib_max_voltage = 4  
+odrv0.axis0.motor.config.requested_current_range = 25 #Requires config save and reboot  
+odrv0.axis0.motor.config.current_control_bandwidth = 100  
+odrv0.axis0.encoder.config.calib_scan_distance = 150  
+odrv0.axis0.encoder.config.bandwidth =35 
+odrv0.axis0.controller.config.pos_gain = 1  
+odrv0.axis0.controller.config.vel_gain = 0.02 * odrv0.axis0.motor.config.torque_constant * odrv0.axis0.encoder.config.cpr    
+odrv0.axis0.controller.config.vel_integrator_gain = 0.1 * odrv0.axis0.motor.config.torque_constant * odrv0.axis0.encoder.config.cpr  
+odrv0.axis0.controller.config.vel_limit = 10  
+odrv0.axis0.controller.config.control_mode = CONTROL_MODE_VELOCITY_CONTROL  
+
 
 
 odrv0.save_configuration()
-
-
-odrv0.axis0.requested_state = AXIS_STATE_ENCODER_OFFSET_CALIBRATION
-odrv0.axis0.encoder.config.phase_offset
-odrv0.axis0.error
-odrv0.axis0.encoder.config.direction
-
 
 
 odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
@@ -113,7 +116,6 @@ odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
 
 odrv0.axis0.encoder.shadow_count
 dump_errors(odrv0)
-
 
 
 ```
@@ -224,3 +226,4 @@ odrv0.axis0.controller.input_vel = 2
 odrv0.axis0.controller.input_vel = 0
 odrv0.axis0.requested_state = AXIS_STATE_IDLE
 ```
+odrv0.save_configuration()    
