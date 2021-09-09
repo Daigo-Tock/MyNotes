@@ -77,6 +77,34 @@ $ vim ~/.bashrc
 
 ## odrivetoolにて
 
+
+---
+* I use encorder
+
+  * debugging
+```odrivetool
+dump_errors(odrv0)
+odrv0.clear_errors()
+---
+
+```odrivetool
+odrv0.axis0.motor.config.pole_pairs = 4
+odrv0.axis0.motor.config.motor_type = MOTOR_TYPE_HIGH_CURRENT
+
+odrv0.axis0.encoder.config.cpr = 4096
+```
+  * save
+```odrivetool
+odrv0.save_configuration()
+```
+
+  * caliburation
+```odrivetool
+odrv0.axis0.requested_state = AXIS_STATE_ENCODER_OFFSET_CALIBRATION
+odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
+```
+
+
 * config
 ```bash
 odrv0.axis0.motor.config.current_lim = 10  
