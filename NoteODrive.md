@@ -81,6 +81,31 @@ $ vim ~/.bashrc
 ---
 * I use encorder
 
+ * delete config
+```odrivetool
+odrv0.erase_configuration()
+```
+
+```
+
+odrv0.config.enable_brake_resistor = True
+odrv0.axis0.motor.config.pole_pairs = 4
+odrv0.axis0.motor.config.motor_type = MOTOR_TYPE_HIGH_CURRENT
+
+
+odrv0.axis0.requested_state = AXIS_STATE_ENCODER_OFFSET_CALIBRATION
+odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
+odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
+
+odrv0.axis0.encoder.shadow_count
+dump_errors(odrv0)
+
+
+```
+
+
+
+
   * debugging
 ```odrivetool
 dump_errors(odrv0)
@@ -91,7 +116,7 @@ odrv0.clear_errors()
 odrv0.axis0.motor.config.pole_pairs = 4
 odrv0.axis0.motor.config.motor_type = MOTOR_TYPE_HIGH_CURRENT
 
-odrv0.axis0.encoder.config.cpr = 4096
+odrv0.axis0.encoder.config.cpr = 4096 * 4
 ```
   * save
 ```odrivetool
@@ -104,6 +129,22 @@ odrv0.axis0.requested_state = AXIS_STATE_ENCODER_OFFSET_CALIBRATION
 odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
 ```
 
+ * wakaran
+```odrivetool
+odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE 
+dump_errors(odrv0)
+
+
+odrv0.axis0.requested_state = AXIS_STATE_MOTOR_CALIBRATION  
+odrv0.axis0.motor  
+odrv0.axis0.motor.config.pre_calibrated = True
+
+odrv0.axis0.requested_state = AXIS_STATE_ENCODER_HALL_POLARITY_CALIBRATION
+odrv0.axis0.encoder
+odrv0.axis0.requested_state = AXIS_STATE_ENCODER_OFFSET_CALIBRATION
+odrv0.axis0.encoder
+odrv0.axis0.encoder.config.pre_calibrated = True
+```
 
 * config
 ```bash
