@@ -87,18 +87,18 @@ odrv0.erase_configuration()
 ```
 
 ```
-
-odrv0.config.enable_brake_resistor = True # True False
-
 odrv0.axis0.encoder.config.cpr =  2048 # 8 ppr, max 2048 ppr
-odrv0.axis0.encoder.config.mode =*ENCODER_MODE_INCREMENTAL
-odrv0.axis0.encoder.config.calib_scan_distance = 150  
-
-odrv0.axis0.motor.config.pole_pairs = 4
+odrv0.axis0.motor.config.pole_pairs = 16
 odrv0.axis0.motor.config.motor_type = MOTOR_TYPE_HIGH_CURRENT
 odrv0.axis0.motor.config.torque_constant = 8.27 / 4000 #4000 == <measured KV>  
+odrv0.config.enable_brake_resistor = True # True False
+
+
+odrv0.axis0.encoder.config.mode =ENCODER_MODE_INCREMENTAL
+odrv0.axis0.encoder.config.calib_scan_distance = 150  
+
 odrv0.axis0.motor.config.resistance_calib_max_voltage = 12 
-odrv0.axis0.motor.config.requested_current_range = 25 #Requires config save and reboot  
+odrv0.axis0.motor.config.requested_current_range = 5 #Requires config save and reboot  
 odrv0.axis0.motor.config.current_lim = 60
 odrv0.axis0.controller.config.vel_limit = 10  
 
